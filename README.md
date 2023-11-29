@@ -8,7 +8,9 @@ how to compile for linux:
 how to use the tool:<br/>
 to generate a key and print it:<br/>
 >keygen Opt Key1 Key2 ...etc<br />
+
 to generate a key file:<br />
+
 >keygen Opt Key1 Key2 ...etc > key.bin<br />
 # Currently available options:
 r: replace any null byte in the code with other bytes (0x01, 0x02 ... etc).<br />
