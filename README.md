@@ -16,5 +16,9 @@ to generate a key file:<br />
 r: replace any null byte in the code with other bytes (0x01, 0x02 ... etc).<br />
 l: let the null bytes be inside the key.<br />
 i: ignore the null bytes. this would shrink the result key.<br />
+to use the new algorithm, make sure to prepend "f" to the options and adding the key size argument before all the sub keys.<br />
+example:<br />
+>keygen fr 1024 key1 key2 key3 ....<br />
+
 # Notes:
-you have to chose subkeys that their sizes are even to get the longest possible pseudo-random keys.<br />
+in the legacy algorithm you have to chose subkeys that their sizes are coprime to get the longest possible pseudo-random keys.<br />
