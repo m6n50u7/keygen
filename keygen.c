@@ -81,9 +81,11 @@ void incgen(int argn, char *args[])
 					ch++;
 					if(!ch)
 						ch++;
+					continue;
 				case 'l':
 					//let the null bytes in the key
 					putchar(out);
+					continue;
 				case 'i':
 					//simply ignore them and dont iclude null bytes
 					continue;
@@ -98,6 +100,11 @@ void fincgen(int argn, char *args[])
 {
 	int keysize = str2int(args[2]);
 	char *mem = calloc(keysize, 1);
+	if(mem == NULL)
+	{
+		fprintf(stderr, "error in allocation\n");
+		exit(1);
+	}
 	for(int i = 3; i < argn; i++)
 	{
 		int cur = 0;
@@ -105,7 +112,7 @@ void fincgen(int argn, char *args[])
 		{
 			mem[j] += args[i][cur];
 			cur++;
-			if(!args[i][cur])
+			if(args[i][cur] == '\0')
 				cur = 0;
 		}
 		cur = 0;
@@ -124,7 +131,7 @@ void fincgen(int argn, char *args[])
 			}
 			mem[(j + (signed char) args[i][cur]) % keysize] = cache;
 			cur++;
-			if(!args[i][cur])
+			if(args[i][cur] == '\0')
 				cur = 0;
 		}
 	}
@@ -142,17 +149,17 @@ void fincgen(int argn, char *args[])
 					putchar(ch);
 					ch++;
 					if(!ch)
-						ch++;
+						ch++;continue;
 				case 'l':
 					//let the null bytes in the key
-					putchar(mem[i]);
+					putchar(mem[i]);continue;
 				case 'i':
 					//simply ignore them and dont iclude null bytes
 					continue;
 			}
 		}
 	}
-	free(mem);
+	//free(mem);
 }
 int main(int argn, char* args[])
 {
