@@ -73,23 +73,23 @@ void incgen(int argn, char *args[])
 		}
 		if(!out)
 		{
-			switch(args[1][0])
+			if(args[1][0] == 'r')
 			{
-				case 'r':
-					//replace null bytes by different bytes
-					putchar(ch);
+				//replace null
+				putchar(ch);
+				ch++;
+				if(!ch)
 					ch++;
-					if(!ch)
-						ch++;
-					continue;
-				case 'l':
-					//let the null bytes in the key
-					putchar(out);
-					continue;
-				case 'i':
-					//simply ignore them and dont iclude null bytes
-					continue;
+				continue;
 			}
+			if(args[1][0] == 'l')
+			{
+				//let the null
+				putchar(out);
+				continue;
+			}
+			if(args[1][0] ==  'i')
+					continue;//ignore the null
 		}
 		else
 			putchar(out);
@@ -142,24 +142,29 @@ void fincgen(int argn, char *args[])
 			putchar(mem[i]);
 		else
 		{
-			switch(args[1][1])
+			if(args[1][1] == 'r')
 			{
-				case 'r':
-					//replace null bytes by different bytes
-					putchar(ch);
+				//replace null
+				putchar(ch);
+				ch++;
+				if(!ch)
 					ch++;
-					if(!ch)
-						ch++;continue;
-				case 'l':
-					//let the null bytes in the key
-					putchar(mem[i]);continue;
-				case 'i':
-					//simply ignore them and dont iclude null bytes
-					continue;
+				continue;
 			}
+			if(args[1][1] == 'l')
+			{
+				//let the null
+				putchar(mem[i]);
+				continue;
+			}
+			if(args[1][1] ==  'i')
+					continue;//ignore the null
 		}
 	}
-	//free(mem);
+	for(int i = 0; i < keysize; i++)
+		mem[i] = 0;
+	//free(mem);//this was removed because for some reason on my ends sometimes it give segmentation fault or invalid pointer error when one of the keys is big. and the memory will be freed automatically after program exits
+	
 }
 int main(int argn, char* args[])
 {
