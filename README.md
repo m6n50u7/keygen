@@ -22,4 +22,5 @@ example:<br />
 
 # Notes:
 in the legacy algorithm you have to chose subkeys that their sizes are coprime to get the longest possible pseudo-random keys.<br />
-for unkown reasons, sometimes I get reproducible segfaults on my ARM phone using termux. but on 64 bit PC there is no encountered error.
+the buggy version was kept because the output of option replace was fixed but the fix isn't backward compatible.<br/>
+for unkown reasons, when using the new algorithm sometimes I get reproducible segfaults on my ARM phone using termux. but on 64 bit PC there is no encountered error.
