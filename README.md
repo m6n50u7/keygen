@@ -22,3 +22,4 @@ example:<br />
 
 # Notes:
 in the legacy algorithm you have to chose subkeys that their sizes are coprime to get the longest possible pseudo-random keys.<br />
+for unkown reasons, sometimes I get reproducible segfaults on my ARM phone using termux. but on 64 bit PC there is no encountered error.
