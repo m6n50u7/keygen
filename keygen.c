@@ -53,6 +53,13 @@ int str2int(char string[])
 	else
 		return num;
 }
+int mod(int a, int b)
+{
+	int c = a % b;
+	if(c < 0)
+		c += b;
+	return c;
+}
 void incgen(int argn, char *args[])
 {
 	char ch = 1;
@@ -94,7 +101,7 @@ void incgen(int argn, char *args[])
 		else
 			putchar(out);
 	}
-	free(i);
+	//free(i);
 }
 void fincgen(int argn, char *args[])
 {
@@ -122,14 +129,14 @@ void fincgen(int argn, char *args[])
 			if((signed char) args[i][cur] > 0)
 			{
 				for(int k = 0; k < (signed char) args[i][cur]; k++)
-					mem[(j + k) % keysize] = mem[(j + k + 1) % keysize];
+					mem[mod((j + k), keysize)] = mem[mod((j + k + 1), keysize)];
 			}
 			else
 			{
 				for(int k = 0; k > (signed char) args[i][cur]; k--)
-					mem[(j + k) % keysize] = mem[(j + k - 1) % keysize];
+					mem[mod((j + k + keysize), keysize)] = mem[mod((j + k - 1), keysize)];
 			}
-			mem[(j + (signed char) args[i][cur]) % keysize] = cache;
+			mem[mod(keysize + j + ((signed char) args[i][cur]), keysize)] = cache;
 			cur++;
 			if(args[i][cur] == '\0')
 				cur = 0;
@@ -163,14 +170,13 @@ void fincgen(int argn, char *args[])
 	}
 	for(int i = 0; i < keysize; i++)
 		mem[i] = 0;
-	//free(mem);//this was removed because for some reason on my ends sometimes it give segmentation fault or invalid pointer error when one of the keys is big. and the memory will be freed automatically after program exits
-	
+	//free(mem);//this was replaced by the the loop above because for some reason on my ends sometimes it give segmentation fault or invalid pointer error when one of the keys is big. and the memory will be freed automatically after program exits
 }
 int main(int argn, char* args[])
 {
 	if(argn < 4)
 	{
-		printf("a long pseudo-random key genration tool using multiple small memorable keys.\nusage:\nfor the legacy algorithm:\n%s Opt Key1 Key2 ...\nfor the new algorithm, add f before the options (fl, fr, fi) and the key size in Bytes. (PS. this will require to maintain the same sorting of sub passwords)\n", args[0], args[0]);
+		printf("a long pseudo-random key genration tool using multiple small memorable keys.\nusage:\nfor the legacy algorithm:\n%s Opt Key1 Key2 ...\nfor the new algorithm, add f before the options (fl, fr, fi) and the key size in Bytes. (PS. this will require to maintain the same sorting of sub passwords)\n", args[0]);
 		return 1;
 	}
 	if(args[1][0] == 'f')
